@@ -1,0 +1,343 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>College Diary Media</title>
+    <style>
+        /* Base body styling */
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f0f0f0;
+            background-image: url('vibrant.jpg');
+            background-repeat: no-repeat;
+            margin: 0px;
+            background-size: cover;
+            border: 0px;
+            background-position: center;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+            padding: 20px;
+            box-sizing: border-box;
+        }
+
+        /* Animation for container glow effect */
+        @keyframes spiralGlow {
+            0%, 100% {
+                box-shadow: 0 0 5px #4A6274, 0 0 10px #4A6274, 0 0 15px #4A6274, 0 0 20px #4A6274;
+            }
+            25% {
+                box-shadow: 5px 5px 5px #94ACBF, 10px 10px 10px #94ACBF, 15px 15px 15px #94ACBF, 20px 20px 20px #94ACBF;
+            }
+            50% {
+                box-shadow: 0 10px 5px #4A6274, 0 20px 10px #4A6274, 0 30px 15px #4A6274, 0 40px 20px #4A6274;
+            }
+            75% {
+                box-shadow: -5px 5px 5px #94ACBF, -10px 10px 10px #94ACBF, -15px 15px 15px #94ACBF, -20px 20px 20px #94ACBF;
+            }
+        }
+
+        /* Main container styling */
+        .diary-container {
+            background-color: rgba(255, 255, 255, 0.9);
+            border-radius: 8px;
+            padding: 2rem;
+            width: 100%;
+            max-width: 1000px;
+            animation: spiralGlow 4s ease-in-out infinite;
+        }
+
+        /* Heading styles */
+        h1 {
+            color: #2c3e50;
+            text-align: center;
+            margin-bottom: 1.5rem;
+        }
+
+        /* Media container and items */
+        .media-container {
+            position: relative;
+            width: 100%;
+            height: 0;
+            padding-bottom: 70%; /* 16:9 aspect ratio */
+            overflow: hidden;
+            background-color:rgba(255, 255, 255, 0.9);
+        }
+
+        .media-item {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            opacity: 0;
+            transition: opacity 0.5s ease-in-out;
+            object-fit: contain;
+        }
+
+        .media-item.active {
+            opacity: 1;
+        }
+
+        /* Caption styling */
+        .media-caption {
+            text-align: center;
+            margin-top: 1rem;
+            font-style: italic;
+            color: #555;
+            min-height: 3em;
+        }
+
+        /* Navigation buttons */
+        .nav-buttons {
+            display: flex;
+            justify-content: center;
+            margin-top: 1rem;
+            color: white;
+            flex-wrap: wrap;
+        }
+
+        .nav-button {
+            background-color: #3498db;
+            color: white;
+            border: none;
+            padding: 0.5rem 1rem;
+            margin: 0.25rem;
+            border-radius: 4px;
+            cursor: pointer;
+            font-size: 1rem;
+        }
+
+        .nav-button:hover {
+            background-color: #2980b9;
+        }
+
+        .nav-button.active {
+            background-color: #2c3e50;
+        }
+
+        /* Video and image controls */
+        .video-controls,
+        .image-controls {
+            position: absolute;
+            bottom: 10px;
+            left: 10px;
+            z-index: 10;
+            display: flex;
+            gap: 10px;
+        }
+
+        .video-control,
+        .image-control {
+            background-color: rgba(0, 0, 0, 0.5);
+            color: white;
+            border: none;
+            padding: 5px 10px;
+            border-radius: 4px;
+            cursor: pointer;
+            font-size: 0.8rem;
+        }
+
+        .video-control:hover,
+        .image-control:hover {
+            background-color: rgba(0, 0, 0, 0.7);
+        }
+
+        /* Keyboard shortcuts info */
+        .keyboard-shortcuts {
+            text-align: center;
+            margin-top: 1rem;
+            font-size: 0.9rem;
+            color: #555;
+        }
+    </style>
+</head>
+<body>
+    <div class="diary-container">
+        <h1>College Diary Media</h1>
+        <div class="media-container">
+            <!-- Images -->
+            <img src="event1.jpg" alt="HTML structure in VS Code" class="media-item active" data-type="image">
+            <img src="event2.jpg" alt="CSS styling in VS Code" class="media-item" data-type="image">
+            <img src="event3.jpg" alt="VS Code extensions for web development" class="media-item" data-type="image">
+            <img src="event4.jpg" alt="Live Server preview in VS Code" class="media-item" data-type="image">
+            
+            <!-- Videos -->
+            <video src="La Paroza 2024.mp4" class="media-item" data-type="video">
+                Your browser does not support the video tag.
+            </video>
+            <video src="CCS Lights Up the Stage Dancing to the ACT Jingle!.mp4" class="media-item" data-type="video">
+                Your browser does not support the video tag.
+            </video>
+
+            <!-- Video Controls -->
+            <div class="video-controls">
+                <button class="video-control" id="playPauseBtn" aria-label="Play or pause video">Play</button>
+                <button class="video-control" id="muteBtn" aria-label="Mute or unmute video">Mute</button>
+                <button class="video-control" id="fullscreenBtn" aria-label="Toggle video fullscreen">Fullscreen</button>
+            </div>
+
+            <!-- Image Controls -->
+            <div class="image-controls">
+                <button class="image-control" id="imageFullscreenBtn" aria-label="Toggle image fullscreen">Fullscreen</button>
+            </div>
+        </div>
+
+        <!-- Caption -->
+        <div class="media-caption">
+            <p>Foundation Event: before starting the event</p>
+        </div>
+
+        <!-- Navigation -->
+        <div class="nav-buttons">
+            <button class="nav-button active" data-index="0">1</button>
+            <button class="nav-button" data-index="1">2</button>
+            <button class="nav-button" data-index="2">3</button>
+            <button class="nav-button" data-index="3">4</button>
+            <button class="nav-button" data-index="4">5</button>
+            <button class="nav-button" data-index="5">6</button>
+        </div>
+
+        <div class="keyboard-shortcuts">
+            
+        </div>
+    </div>
+
+    <script>
+        // DOM Elements
+        const mediaItems = document.querySelectorAll('.media-item');
+        const navButtons = document.querySelectorAll('.nav-button');
+        const captionElement = document.querySelector('.media-caption p');
+        const playPauseBtn = document.getElementById('playPauseBtn');
+        const muteBtn = document.getElementById('muteBtn');
+        const fullscreenBtn = document.getElementById('fullscreenBtn');
+        const imageFullscreenBtn = document.getElementById('imageFullscreenBtn');
+
+        // Content
+        const captions = [
+            "Foundation Event: before starting the foundation event and it will be held in stage.",
+            "Group Picture: group picture for the teachers:",
+            "Band Singing: singing the old classic with mr. bebot",
+            "Ambassador and Ambassadress: this event is a pageant!",
+            "CCS Lights Up the Stage Dancing to the ACT Jingle!: performing the foundation event and singing ACT Jingle.",
+            "La Paroza 2024: performing in the stage for the foundation event."
+        ];
+
+        let currentIndex = 0;
+
+        // Functions
+        function showMedia(index) {
+            mediaItems.forEach((item, i) => {
+                if (i === index) {
+                    item.classList.add('active');
+                    if (item.tagName === 'VIDEO') {
+                        item.play();
+                        playPauseBtn.textContent = 'Pause';
+                    }
+                } else {
+                    item.classList.remove('active');
+                    if (item.tagName === 'VIDEO') {
+                        item.pause();
+                        item.currentTime = 0;
+                    }
+                }
+            });
+
+            navButtons.forEach((button, i) => {
+                button.classList.toggle('active', i === index);
+            });
+
+            captionElement.textContent = captions[index];
+            currentIndex = index;
+            updateControlsVisibility();
+        }
+
+        function updateControlsVisibility() {
+            const activeItem = document.querySelector('.media-item.active');
+            const videoControls = document.querySelector('.video-controls');
+            const imageControls = document.querySelector('.image-controls');
+            
+            if (activeItem.tagName === 'VIDEO') {
+                videoControls.style.display = 'flex';
+                imageControls.style.display = 'none';
+            } else {
+                videoControls.style.display = 'none';
+                imageControls.style.display = 'flex';
+            }
+        }
+
+        function togglePlayPause() {
+            const activeVideo = document.querySelector('video.active');
+            if (activeVideo) {
+                if (activeVideo.paused) {
+                    activeVideo.play();
+                    playPauseBtn.textContent = 'Pause';
+                } else {
+                    activeVideo.pause();
+                    playPauseBtn.textContent = 'Play';
+                }
+            }
+        }
+
+        function toggleMute() {
+            const activeVideo = document.querySelector('video.active');
+            if (activeVideo) {
+                activeVideo.muted = !activeVideo.muted;
+                muteBtn.textContent = activeVideo.muted ? 'Unmute' : 'Mute';
+            }
+        }
+
+        function toggleFullscreen() {
+            const activeMedia = document.querySelector('.media-item.active');
+            if (!document.fullscreenElement) {
+                if (activeMedia.requestFullscreen) {
+                    activeMedia.requestFullscreen();
+                } else if (activeMedia.mozRequestFullScreen) {
+                    activeMedia.mozRequestFullScreen();
+                } else if (activeMedia.webkitRequestFullscreen) {
+                    activeMedia.webkitRequestFullscreen();
+                } else if (activeMedia.msRequestFullscreen) {
+                    activeMedia.msRequestFullscreen();
+                }
+            } else {
+                if (document.exitFullscreen) {
+                    document.exitFullscreen();
+                } else if (document.mozCancelFullScreen) {
+                    document.mozCancelFullScreen();
+                } else if (document.webkitExitFullscreen) {
+                    document.webkitExitFullscreen();
+                } else if (document.msExitFullscreen) {
+                    document.msExitFullscreen();
+                }
+            }
+        }
+
+        // Event Listeners
+        navButtons.forEach((button, index) => {
+            button.addEventListener('click', () => showMedia(index));
+        });
+
+        playPauseBtn.addEventListener('click', togglePlayPause);
+        muteBtn.addEventListener('click', toggleMute);
+        fullscreenBtn.addEventListener('click', toggleFullscreen);
+        imageFullscreenBtn.addEventListener('click', toggleFullscreen);
+
+        // Keyboard Controls
+        document.addEventListener('keydown', (e) => {
+            if (e.code === 'Space') {
+                e.preventDefault();
+                togglePlayPause();
+            } else if (e.key.toLowerCase() === 'm') {
+                toggleMute();
+            } else if (e.key.toLowerCase() === 'f') {
+                toggleFullscreen();
+            }
+        });
+
+        // Initialize
+        showMedia(0);
+    </script>
+</body>
+</html>
